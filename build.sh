@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --tag alexanderfefelov/1c-server .
+docker build --tag ilijaz/1c-server .
