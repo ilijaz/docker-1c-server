@@ -4,13 +4,14 @@ ENV DEBIAN_FRONTEND noninteractive
 
 #ENV GOSU_VERSION 1.7
 RUN echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+RUN dpkg --add-architecture i386
 RUN apt-get -qq update && apt-get -qq install --yes --no-install-recommends software-properties-common
 RUN apt-add-repository non-free
 RUN apt-add-repository contrib
 RUN apt-get -qq update \
   && apt-get -qq install --yes --no-install-recommends ca-certificates wget locales \
   && `#----- Install the dependencies -----` \
-  && apt-get -qq install --yes --no-install-recommends fontconfig imagemagick \
+  && apt-get -qq install --yes --no-install-recommends fontconfig:i386 imagemagick:i386 imagemagick-6.q16:i386 \
   && `#----- Deal with ttf-mscorefonts-installer -----` \
   && apt-get -qq install --yes --no-install-recommends xfonts-utils ttf-mscorefonts-installer\
   && `#----- Install gosu -----` \
@@ -33,8 +34,6 @@ RUN rm /tmp/*.deb
 RUN mkdir --parent /var/log/1C /home/usr1cv8/.1cv8/1C/1cv8/conf 
 RUN chown --recursive usr1cv8:grp1cv8 /var/log/1C /home/usr1cv8
 
-RUN dpkg --add-architecture i386
-RUN apt-get update
 RUN apt-get -qq install --yes --no-install-recommends libc6:i386 libncurses5:i386 libstdc++6:i386
 
 RUN chmod a+x /opt/1C/v8.3/i386/ragent
